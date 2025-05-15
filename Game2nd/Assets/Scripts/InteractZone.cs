@@ -12,9 +12,10 @@ public class Interact : MonoBehaviour
         border = borderZone.GetComponent<Collider>();
     }
 
-    private void OnTriggerEnter(Collider border)
+    private void OnTriggerEnter(Collider other)
     {
-        
-        Debug.Log("Border Colided!");
+        Collidable collidable = other.GetComponent<Collidable>();
+
+        if(collidable != null) { collidable.Activate(); }
     }
 }
