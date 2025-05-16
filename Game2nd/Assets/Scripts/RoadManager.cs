@@ -11,6 +11,7 @@ public class RoadManager : MonoBehaviour
     [SerializeField] float offset;
     int roadNum;
     [SerializeField] float moveDist;
+    bool touch;
 
     void Start()
     {
@@ -18,14 +19,19 @@ public class RoadManager : MonoBehaviour
         offset = 40f;
         roadNum = 0;
         moveDist = offset * roadList.Count;
+        touch = false;
     }
 
     void Update()
     {
-        for (int i = 0; i < roadList.Count; i++)
+        Keyboard();
+
+        if (touch)
         {
-           roadList[i].transform.Translate(speed * Vector3.back * Time.deltaTime);
+            for (int i = 0; i < roadList.Count; i++)
+            { roadList[i].transform.Translate(speed * Vector3.back * Time.deltaTime); }
         }
+        
     }
 
     public void initializePosition()
@@ -41,4 +47,11 @@ public class RoadManager : MonoBehaviour
         else { roadNum += 1; }
     }
 
+    void Keyboard()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (touch == false) { touch = true; }
+        }
+    }
 }
