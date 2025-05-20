@@ -12,14 +12,20 @@ public enum RoadLine
 public class Runner : MonoBehaviour
 {
     [SerializeField] RoadLine lineNow;
-    [SerializeField] bool touch;
+    [SerializeField] Rigidbody rigidbody;
+    [SerializeField] float moveX;
+    bool touch, isMoving;
     Animator runnerAnimator;
-    bool isMoving;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        rigidbody = gameObject.GetComponent<Rigidbody>();
+        runnerAnimator = GetComponent<Animator>();
+    }
+
     void Start()
     {
-        runnerAnimator = GetComponent<Animator>();
+        moveX = 3;
         touch = false;
         lineNow = RoadLine.MIDDLE;
         isMoving = false;
@@ -45,29 +51,22 @@ public class Runner : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (lineNow != RoadLine.LEFT && isMoving == false) {
-                if (lineNow == RoadLine.MIDDLE)
-                { targetPos = new Vector3(-3, 0, 5); }
-                if (lineNow == RoadLine.RIGHT)
-                { targetPos = new Vector3(0, 0, 5); }
-                
-                StartCoroutine(MoveOverSeconds(targetPos, 0.8f));
-                runnerAnimator.SetTrigger("moveLeft");
+            if (lineNow != RoadLine.LEFT && isMoving == false && touch == true) {
                 lineNow--;
+                targetPos = new Vector3((float)lineNow * moveX, 0, 5);
+                
+                StartCoroutine(MoveOverSeconds(targetPos, 0.7f));
+                runnerAnimator.SetTrigger("moveLeft");
             }
         }
-
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (lineNow != RoadLine.RIGHT && isMoving == false) {
-                if (lineNow == RoadLine.MIDDLE)
-                { targetPos = new Vector3(3, 0, 5); }
-                if (lineNow == RoadLine.LEFT)
-                { targetPos = new Vector3(0, 0, 5); }
-
-                StartCoroutine(MoveOverSeconds(targetPos, 0.8f));
-                runnerAnimator.SetTrigger("moveRight");
+            if (lineNow != RoadLine.RIGHT && isMoving == false && touch == true) {
                 lineNow++;
+                targetPos = new Vector3((float)lineNow * moveX, 0, 5);
+
+                StartCoroutine(MoveOverSeconds(targetPos, 0.7f));
+                runnerAnimator.SetTrigger("moveRight");
             }
         }
 

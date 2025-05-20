@@ -356,6 +356,7 @@
 "Assets/Scripts/Camera.cs"
 "Assets/Scripts/InteractZone.cs"
 "Assets/Scripts/InterfaceManager.cs"
+"Assets/Scripts/ObstacleManager.cs"
 "Assets/Scripts/Road.cs"
 "Assets/Scripts/RoadManager.cs"
 "Assets/Scripts/Runner.cs"
