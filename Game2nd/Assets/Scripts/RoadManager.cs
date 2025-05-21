@@ -15,7 +15,7 @@ public class RoadManager : MonoBehaviour
 
     void Start()
     {
-        speed = 10f;
+        speed = 15f;
         offset = 40f;
         roadNum = 0;
         moveDist = offset * roadList.Count;

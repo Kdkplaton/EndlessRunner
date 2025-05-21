@@ -12,14 +12,14 @@ public enum RoadLine
 public class Runner : MonoBehaviour
 {
     [SerializeField] RoadLine lineNow;
-    [SerializeField] Rigidbody rigidbody;
+    //[SerializeField] Rigidbody rigidbody;
     [SerializeField] float moveX;
     bool touch, isMoving;
     Animator runnerAnimator;
 
     private void Awake()
     {
-        rigidbody = gameObject.GetComponent<Rigidbody>();
+        //rigidbody = gameObject.GetComponent<Rigidbody>();
         runnerAnimator = GetComponent<Animator>();
     }
 

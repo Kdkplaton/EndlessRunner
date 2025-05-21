@@ -959,7 +959,7 @@ Transform:
   m_GameObject: {fileID: 1387707188}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -51}
+  m_LocalPosition: {x: 0, y: 0, z: -41}
   m_LocalScale: {x: 15, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1428,12 +1428,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleList: []
-  obstacles:
+  prefab:
   - {fileID: 8334619271545026126, guid: 6218245b0fb0e8f4195608a77fe5f6b1, type: 3}
   - {fileID: 1143663842701103792, guid: 4df20e57a5bf7f74db63da3f7b1e3209, type: 3}
   - {fileID: 1432008316655073383, guid: 6d94061d931888f4bb4c4a849577d16a, type: 3}
-  parentPosition: {fileID: 2016653492}
-  obstacleCount: 0
+  parentPos: {fileID: 2016653492}
 --- !u!4 &2016653492
 Transform:
   m_ObjectHideFlags: 0
@@ -3016,7 +3015,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &3408936723146815057
 CapsuleCollider:
@@ -3075,7 +3074,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineNow: 0
-  rigidbody: {fileID: 0}
   moveX: 0
 --- !u!4 &3447102599584362368
 Transform:

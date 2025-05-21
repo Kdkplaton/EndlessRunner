@@ -9,8 +9,7 @@ public class Road : MonoBehaviour, Collidable
 
     public void Activate()
     {
-        if(callback != null) { callback.Invoke(); }
-
+        if (callback != null) { callback.Invoke(); }
 
     }
 }
