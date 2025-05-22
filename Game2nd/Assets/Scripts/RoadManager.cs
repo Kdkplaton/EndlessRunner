@@ -15,7 +15,7 @@ public class RoadManager : MonoBehaviour
 
     void Start()
     {
-        speed = 15f;
+        speed = 20f;
         offset = 40f;
         roadNum = 0;
         moveDist = offset * roadList.Count;
@@ -24,14 +24,11 @@ public class RoadManager : MonoBehaviour
 
     void Update()
     {
-        Keyboard();
-
         if (touch)
         {
             for (int i = 0; i < roadList.Count; i++)
             { roadList[i].transform.Translate(speed * Vector3.back * Time.deltaTime); }
         }
-        
     }
 
     public void initializePosition()
@@ -47,11 +44,6 @@ public class RoadManager : MonoBehaviour
         else { roadNum += 1; }
     }
 
-    void Keyboard()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (touch == false) { touch = true; }
-        }
-    }
+    public void StartRoad()
+    { if (!touch) { touch = true; Debug.Log("Road Started!"); } }
 }

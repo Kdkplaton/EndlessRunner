@@ -7,28 +7,20 @@ public class Camera : MonoBehaviour
     Animator cameraAnimator;
     bool Touch;
 
-    // Start is called before the first frame update
     void Start()
     {
         cameraAnimator = GetComponent<Animator>();
         Touch = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartCamera()
     {
-        Keyboard();
-    }
-
-    void Keyboard()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!Touch)
         {
-            if (Touch == false)
-            {
-                cameraAnimator.SetTrigger("Touch");
-                Touch = true;
-            }
+            cameraAnimator.SetTrigger("Touch");
+            Touch = true;
+
+            Debug.Log("Cam Started!");
         }
     }
 }

@@ -7,12 +7,12 @@ public class Interact : MonoBehaviour
     [SerializeField] GameObject borderZone;
     Collider border;
 
-    private void Start()
+    void Start()
     {
         border = borderZone.GetComponent<Collider>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         Collidable collidable = other.GetComponent<Collidable>();
 
