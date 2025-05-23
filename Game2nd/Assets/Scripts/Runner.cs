@@ -17,18 +17,22 @@ public class Runner : MonoBehaviour
     Animator runnerAnimator;
     Collider collider;
 
-    private void Awake()
-    {
-        runnerAnimator = GetComponent<Animator>();
-        collider = GetComponent<Collider>();
-    }
+    RoadManager roadManager;
+    ObstacleManager obstacleManager;
+    TimeManager timeManager;
 
     void Start()
     {
+        runnerAnimator = GetComponent<Animator>();
+        collider = GameObject.Find("Runner").GetComponent<Collider>();
         moveX = 3;
         touch = false;
         lineNow = RoadLine.MIDDLE;
         isMoving = false;
+
+        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
+        obstacleManager = GameObject.Find("ObstacleManager").GetComponent<ObstacleManager>();
+        timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
     }
 
     // Update is called once per frame
@@ -94,6 +98,12 @@ public class Runner : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Runner runner = GetComponent<Runner>();
+        runner.transform.position += new Vector3(0,0,-1);
 
+        runnerAnimator.SetTrigger("Die");
+        roadManager.EndRoad();
+        obstacleManager.EndObstacleManager();
+        timeManager.EndTimer();
     }
 }

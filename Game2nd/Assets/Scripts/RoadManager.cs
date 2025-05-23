@@ -15,7 +15,7 @@ public class RoadManager : MonoBehaviour
 
     void Start()
     {
-        speed = 20f;
+        speed = 30f;
         offset = 40f;
         roadNum = 0;
         moveDist = offset * roadList.Count;
@@ -46,4 +46,12 @@ public class RoadManager : MonoBehaviour
 
     public void StartRoad()
     { if (!touch) { touch = true; Debug.Log("Road Started!"); } }
+
+    public void EndRoad()
+    {
+        if (touch) {
+            StopAllCoroutines();
+            touch = false; Debug.Log("Road Ended!");
+        }
+    }
 }

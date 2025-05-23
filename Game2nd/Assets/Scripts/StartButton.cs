@@ -1,35 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class StartButton : MonoBehaviour
 {
     [SerializeField] bool Touch;
+    GameObject eventList;
+    List<Action> funcList;
     Button startBtn;
-    Runner runner;
-    RoadManager roadManager;
-    Camera mainCam;
-    ObstacleManager obstacleManager;
 
     // Start is called before the first frame update
     void Start()
     {
         Touch = false;
-        startBtn = GameObject.Find("StartButton").GetComponent<Button>();
-        runner = GameObject.Find("Runner").GetComponent<Runner>();
-        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
-        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        obstacleManager = GameObject.Find("ObstacleManager").GetComponent<ObstacleManager>();
+        eventList = GameObject.Find("EventSystem");
+        funcList = eventList.GetComponent<FunctionList>().getList();
+        startBtn = GetComponent<Button>();
 
         if (startBtn != null)
         {
-            startBtn.onClick.AddListener(OnStart);
-            startBtn.onClick.AddListener(runner.StartRunner);
-            startBtn.onClick.AddListener(roadManager.StartRoad);
-            startBtn.onClick.AddListener(mainCam.StartCamera);
-            startBtn.onClick.AddListener(obstacleManager.StartObstacleManager);
+            // Start Button 클릭시 실행될 이벤트 등록
+            foreach (Action func in funcList)
+            {
+                startBtn.onClick.AddListener(() => func());
+            }
         }
     }
 

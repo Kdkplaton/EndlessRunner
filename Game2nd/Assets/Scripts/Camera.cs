@@ -5,22 +5,33 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
     Animator cameraAnimator;
-    bool Touch;
+    bool touch;
 
     void Start()
     {
         cameraAnimator = GetComponent<Animator>();
-        Touch = false;
+        touch = false;
     }
 
     public void StartCamera()
     {
-        if (!Touch)
+        if (!touch)
         {
             cameraAnimator.SetTrigger("Touch");
-            Touch = true;
+            touch = true;
 
             Debug.Log("Cam Started!");
+        }
+    }
+
+    public void EndCamera()
+    {
+        if (touch)
+        {
+            cameraAnimator.SetTrigger("Die");
+            touch = false;
+
+            Debug.Log("Cam Ended!");
         }
     }
 }

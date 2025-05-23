@@ -21,7 +21,7 @@ public class MouseManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (Cursor.visible) { DisableMode(); }
-            if (!Cursor.visible) { EnableMode(); }
+            else if (!Cursor.visible) { EnableMode(); }
         }
     }
 
