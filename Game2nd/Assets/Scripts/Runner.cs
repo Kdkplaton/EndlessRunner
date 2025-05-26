@@ -1,7 +1,4 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public enum RoadLine
@@ -15,16 +12,16 @@ public class Runner : MonoBehaviour
     [SerializeField] float moveX;
     bool touch, isMoving;
     Animator runnerAnimator;
-    Collider collider;
 
     RoadManager roadManager;
     ObstacleManager obstacleManager;
     TimeManager timeManager;
+    Camera mainCam;
+    EndButton endBtn;
 
     void Start()
     {
         runnerAnimator = GetComponent<Animator>();
-        collider = GameObject.Find("Runner").GetComponent<Collider>();
         moveX = 3;
         touch = false;
         lineNow = RoadLine.MIDDLE;
@@ -33,6 +30,8 @@ public class Runner : MonoBehaviour
         roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
         obstacleManager = GameObject.Find("ObstacleManager").GetComponent<ObstacleManager>();
         timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
+        mainCam = GameObject.Find("Virtual Camera").GetComponent<Camera>();
+        endBtn = GameObject.Find("Canvas").GetComponentInChildren<EndButton>(true);
     }
 
     // Update is called once per frame
@@ -99,11 +98,15 @@ public class Runner : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Runner runner = GetComponent<Runner>();
-        runner.transform.position += new Vector3(0,0,-1);
+        runner.transform.position += new Vector3(0,0,-0.5f);
 
-        runnerAnimator.SetTrigger("Die");
+        StopAllCoroutines();
         roadManager.EndRoad();
         obstacleManager.EndObstacleManager();
         timeManager.EndTimer();
+        mainCam.EndCamera();
+        runnerAnimator.SetTrigger("Die");
+        endBtn.Invoke("EndGame", 1f);
+        touch = false;
     }
 }

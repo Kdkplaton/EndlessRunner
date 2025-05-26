@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class CoroutineCache
 {
-    Dictionary<float, WaitForSeconds> dict_WFS = new Dictionary<float, WaitForSeconds>();
+    static Dictionary<float, WaitForSeconds> dict_WFS = new Dictionary<float, WaitForSeconds>();
 
-    void Start()
+    // 생성할 시간(키)의 WFS(WaitForSeconds) 생성
+    public static WaitForSeconds WaitForSecond(float sec)       // 성공시 딕셔너리에 추가, 실패시 에러
     {
-        dict_WFS.Add(1f, new WaitForSeconds(1f));   // 대기시간 1초짜리 WFS(WaitForSeconds)생성
-        dict_WFS.Add(2f, new WaitForSeconds(2f));   // 대기시간 2초짜리 WFS 생성
-        dict_WFS.Add(3f, new WaitForSeconds(3f));   // 대기시간 3초짜리 WFS 생성
-        dict_WFS.Add(4f, new WaitForSeconds(4f));   // 대기시간 4초짜리 WFS 생성
-        dict_WFS.Add(5f, new WaitForSeconds(5f));   // 대기시간 5초짜리 WFS 생성
+        WaitForSeconds WFS;
+        if (!dict_WFS.TryGetValue(sec, out WaitForSeconds found))
+        {
+            WFS = new WaitForSeconds(sec);
+            dict_WFS.Add(sec, WFS);
+            return WFS;
+        }
+        else { Debug.Log("이미 존재하는 키!"); return found; }
     }
 
 }
