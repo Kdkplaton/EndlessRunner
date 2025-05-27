@@ -19,7 +19,7 @@ public class ObstacleManager : MonoBehaviour
 
     void Start()
     {
-        speed = 30f;
+        setSpeed();
         touch = false;
         start = false;
         prefab.Add(Resources.Load<GameObject>("Barrier"));
@@ -40,7 +40,8 @@ public class ObstacleManager : MonoBehaviour
                 StartCoroutine(setObstacle());
                 start = true;
             }
-            
+
+            setSpeed();
 
             for (int i = 0; i < obstacleList.Count; i++)
             {
@@ -102,4 +103,6 @@ public class ObstacleManager : MonoBehaviour
             touch = false; Debug.Log("Obstacles Ended!");
         }
     }
+
+    void setSpeed() { speed = SpeedManager.Instance.Speed; }
 }

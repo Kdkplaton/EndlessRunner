@@ -15,7 +15,7 @@ public class RoadManager : MonoBehaviour
 
     void Start()
     {
-        speed = 30f;
+        setSpeed();
         offset = 40f;
         roadNum = 0;
         moveDist = offset * roadList.Count;
@@ -26,6 +26,8 @@ public class RoadManager : MonoBehaviour
     {
         if (touch)
         {
+            setSpeed();
+
             for (int i = 0; i < roadList.Count; i++)
             { roadList[i].transform.Translate(speed * Vector3.back * Time.deltaTime); }
         }
@@ -54,4 +56,7 @@ public class RoadManager : MonoBehaviour
             touch = false; Debug.Log("Road Ended!");
         }
     }
+
+    void setSpeed() { speed = SpeedManager.Instance.Speed; }
+
 }

@@ -13,6 +13,9 @@ public class Runner : MonoBehaviour
     bool touch, isMoving;
     Animator runnerAnimator;
 
+    // 러너가 스피드를 사용?
+    float speed;
+
     RoadManager roadManager;
     ObstacleManager obstacleManager;
     TimeManager timeManager;
@@ -27,6 +30,7 @@ public class Runner : MonoBehaviour
         lineNow = RoadLine.MIDDLE;
         isMoving = false;
 
+        // Script 참조
         roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
         obstacleManager = GameObject.Find("ObstacleManager").GetComponent<ObstacleManager>();
         timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
@@ -61,7 +65,7 @@ public class Runner : MonoBehaviour
                 lineNow--;
                 targetPos = new Vector3((float)lineNow * moveX, 0, 5);
                 
-                StartCoroutine(MoveOverSeconds(targetPos, 0.7f));
+                StartCoroutine(MoveOverSeconds(targetPos, 0.5f));
                 runnerAnimator.SetTrigger("moveLeft");
             }
         }
@@ -71,7 +75,7 @@ public class Runner : MonoBehaviour
                 lineNow++;
                 targetPos = new Vector3((float)lineNow * moveX, 0, 5);
 
-                StartCoroutine(MoveOverSeconds(targetPos, 0.7f));
+                StartCoroutine(MoveOverSeconds(targetPos, 0.5f));
                 runnerAnimator.SetTrigger("moveRight");
             }
         }

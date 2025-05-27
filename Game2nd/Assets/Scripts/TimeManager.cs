@@ -48,7 +48,7 @@ public class TimeManager : MonoBehaviour
 
             timeText.text = string.Format("{0:D2} : {1:D2} : {2:D2}", minute, second, milsec);
 
-            if (time % 0.05 == 0) { Debug.Log("Times from Game Start : " + timeText.text); }
+            // if (milsec % 25 == 0) { Debug.Log("Times from Game Start : " + timeText.text); }
             
             yield return null;
         }
@@ -66,4 +66,6 @@ public class TimeManager : MonoBehaviour
             touch = false; Debug.Log("Timer Started!");
         }
     }
+
+    public int getSecond() { return second; }
 }

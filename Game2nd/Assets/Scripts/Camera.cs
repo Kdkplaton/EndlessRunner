@@ -43,8 +43,15 @@ public class Camera : MonoBehaviour
 
     public void EndCamera()
     {
+        Vector3 endPos;
+
         if (touch)
         {
+            endPos = virtualCam.transform.position;
+            StopAllCoroutines();
+            virtualCam.transform.position = endPos;
+            virtualCam.Follow = null;
+            
             cameraAnimator.SetTrigger("Die");
             touch = false;
 
