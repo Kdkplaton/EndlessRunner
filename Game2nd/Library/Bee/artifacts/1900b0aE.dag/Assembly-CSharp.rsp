@@ -358,6 +358,7 @@
 "Assets/Scripts/CoroutineCache.cs"
 "Assets/Scripts/EndButton.cs"
 "Assets/Scripts/FunctionList.cs"
+"Assets/Scripts/GameManager.cs"
 "Assets/Scripts/InteractZone.cs"
 "Assets/Scripts/InterfaceManager.cs"
 "Assets/Scripts/MouseManager.cs"
@@ -369,6 +370,7 @@
 "Assets/Scripts/Singleton.cs"
 "Assets/Scripts/SpeedManager.cs"
 "Assets/Scripts/StartButton.cs"
+"Assets/Scripts/State.cs"
 "Assets/Scripts/TimeManager.cs"
 -langversion:9.0
 /deterministic

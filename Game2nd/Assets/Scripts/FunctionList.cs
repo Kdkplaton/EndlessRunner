@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class FunctionList : MonoBehaviour
 {
-    List<Action> functionList;
+    List<Action> startList;
     List<Action> resetList;
 
     private void Start()
     {
-        functionList = new List<Action>
+        startList = new List<Action>
         {
             () => GameObject.Find("Start Button").GetComponent<StartButton>().OnStart(),
             () => GameObject.Find("Runner").GetComponent<Runner>().StartRunner(),
@@ -26,6 +26,6 @@ public class FunctionList : MonoBehaviour
         };
     }
 
-    public List<Action> getList() { return functionList; }
+    public List<Action> getStartList() { return startList; }
     public List<Action> getResetList() { return resetList; }
 }
