@@ -11,25 +11,31 @@ public class RoadManager : MonoBehaviour
     [SerializeField] float offset;
     int roadNum;
     [SerializeField] float moveDist;
-    bool touch;
 
-    void Start()
+    private void Start()
     {
         setSpeed();
         offset = 40f;
         roadNum = 0;
         moveDist = offset * roadList.Count;
-        touch = false;
     }
 
-    void Update()
+    public void OnEnable()
     {
-        if (touch)
-        {
-            setSpeed();
+        State.Subscribe(Condition.START, StartRoads);
+        State.Subscribe(Condition.FINISH, EndRoads);
+    }
 
+    IEnumerator moveRoads()
+    {
+        while(true)
+        {
             for (int i = 0; i < roadList.Count; i++)
             { roadList[i].transform.Translate(speed * Vector3.back * Time.deltaTime); }
+
+            setSpeed();
+
+            yield return null;
         }
     }
 
@@ -46,17 +52,25 @@ public class RoadManager : MonoBehaviour
         else { roadNum += 1; }
     }
 
-    public void StartRoad()
-    { if (!touch) { touch = true; Debug.Log("Road Started!"); } }
-
-    public void EndRoad()
+    public void StartRoads()
     {
-        if (touch) {
-            StopAllCoroutines();
-            touch = false; Debug.Log("Road Ended!");
-        }
+        StartCoroutine(moveRoads());
+        Debug.Log("Road Started!");
+    }
+
+    public void EndRoads()
+    {
+        StopAllCoroutines();
+        setSpeed();
+        Debug.Log("Road Ended!");
     }
 
     void setSpeed() { speed = SpeedManager.Instance.Speed; }
+
+    public void OnDisable()
+    {
+        State.UnSubscribe(Condition.START, StartRoads);
+        State.UnSubscribe(Condition.FINISH, EndRoads);
+    }
 
 }

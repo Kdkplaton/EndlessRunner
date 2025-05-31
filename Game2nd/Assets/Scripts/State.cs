@@ -10,6 +10,7 @@ public enum Condition
     RESUME
 }
 
+// 이벤트버스 구조 - 클래스 State
 public static class State
 {
     private static Dictionary<Condition, UnityEvent> dictionary = new Dictionary<Condition, UnityEvent>();
@@ -18,35 +19,64 @@ public static class State
     static Action finish;
     static Action resume;
 
-    public static void Subscribe(Condition condition, UnityAction unityAction)
+    public static void Subscribe(Condition condition, Action unityAction)
     {
-        UnityEvent unityEvent = new UnityEvent();
-
-        unityEvent.AddListener(unityAction);
-
+        
         switch(condition)
         {
             case Condition.START:
-                dictionary.Add(Condition.START, unityEvent);
+                start += unityAction;
+                /*for(int i = 0; i < start.GetInvocationList().Length; i++)
+                {
+                    Delegate[] handlers = start.GetInvocationList();
+                    
+                    foreach(var handler in handlers)
+                    {
+                        Debug.Log("test1:" + handler.Method.Name);
+                    }
+                }*/
                 break;
             case Condition.FINISH:
-                dictionary.Add(Condition.FINISH, unityEvent);
+                finish += unityAction;
                 break;
             case Condition.RESUME:
-                dictionary.Add(Condition.RESUME, unityEvent);
+                resume += unityAction;
                 break;
         }
 
     }
 
-    public static void Unsubscribe(Condition condition, UnityAction unityAction)
+    public static void UnSubscribe(Condition condition, Action unityAction)
     {
-
+        switch (condition)
+        {
+            case Condition.START:
+                start -= unityAction;
+                break;
+            case Condition.FINISH:
+                finish -= unityAction;
+                break;
+            case Condition.RESUME:
+                resume -= unityAction;
+                break;
+        }
     }
 
     public static void Publish(Condition condition)
     {
-
+        // null이 아닌 경우 실행
+        switch (condition)
+        {
+            case Condition.START:
+                start?.Invoke();
+                break;
+            case Condition.FINISH:
+                finish?.Invoke();
+                break;
+            case Condition.RESUME:
+                resume?.Invoke();
+                break;
+        }
     }
 
 

@@ -4,58 +4,58 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-    CinemachineVirtualCamera virtualCam;
+    CinemachineVirtualCamera cinemachineCam;
     Animator cameraAnimator;
-    bool touch;
+    GameObject runner;
 
     void Start()
     {
-        virtualCam = GetComponent<CinemachineVirtualCamera>();
-        virtualCam.Follow = null;
+        cinemachineCam = GetComponent<CinemachineVirtualCamera>();
+        cinemachineCam.Follow = null;
         cameraAnimator = GetComponent<Animator>();
-        touch = false;
+        runner = GameObject.Find("Runner");
     }
 
-    void Update()
+    public void OnEnable()
     {
-        if (touch) { StartCoroutine(SetCamera()); }
+        State.Subscribe(Condition.START, StartCamera);
+        State.Subscribe(Condition.FINISH, EndCamera);
     }
 
     public void StartCamera()
     {
-        if (!touch)
-        {
-            cameraAnimator.SetTrigger("Touch");
-            touch = true;
-
-            Debug.Log("Cam Started!");
-        }
+        cameraAnimator.SetTrigger("Touch");
+        StartCoroutine(SetCamera());
+        Debug.Log("Cam Started!");
     }
 
     IEnumerator SetCamera()
     {
-        yield return CoroutineCache.WaitForSecond(1f);
-
-        virtualCam.Follow = GameObject.Find("Runner").transform;
-        
+        yield return CoroutineCache.WaitForSecond(1.1f);
+        cinemachineCam.Follow = runner.transform;
         Debug.Log("Cam Follow Activated!");
     }
 
     public void EndCamera()
     {
         Vector3 endPos;
+        endPos = transform.position;
+        endPos.z -= 5f;
+        Debug.Log("endPos1 : " + endPos);
 
-        if (touch)
-        {
-            endPos = virtualCam.transform.position;
-            StopAllCoroutines();
-            virtualCam.transform.position = endPos;
-            virtualCam.Follow = null;
-            
-            cameraAnimator.SetTrigger("Die");
-            touch = false;
+        StopAllCoroutines();
+        cinemachineCam.Follow = null;
+        Debug.Log("endPos2 : " + endPos);
+        transform.position = endPos;
 
-            Debug.Log("Cam Ended!");
-        }
+        cameraAnimator.SetTrigger("Die");
+        Debug.Log("Cam Ended!");
     }
+
+    public void OnDisable()
+    {
+        State.UnSubscribe(Condition.START, StartCamera);
+        State.UnSubscribe(Condition.FINISH, EndCamera);
+    }
+
 }

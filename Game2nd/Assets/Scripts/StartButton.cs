@@ -1,35 +1,44 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StartButton : MonoBehaviour
 {
-    [SerializeField] bool Touch;
-    Button startBtn;
-    FunctionList funcList;
+    [SerializeField] Button startBtn;
     GameManager gameManager;
 
-    // Start is called before the first frame update
     void Start()
     {
-        startBtn = GetComponent<Button>();
-        funcList = GameObject.Find("EventSystem").GetComponent<FunctionList>();
-
-
-
-        Touch = false;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        startBtn.onClick.AddListener(OnClickStart);
     }
 
-    public void OnStart()
+    public void OnEnable()
     {
-        if (Touch == false)
-        {
-            gameObject.SetActive(false);
-            Touch = true;
+        State.Subscribe(Condition.START, DisableStartBtn);
+        State.Subscribe(Condition.RESUME, EnableStartBtn);
+    }
 
-            Debug.Log("Btn Clicked!");
-        }
+    public void OnClickStart()
+    {
+        gameManager.Execute();
+    }
+
+    public void DisableStartBtn()
+    {
+        gameObject.SetActive(false);
+        Debug.Log("startBtn Disabled!");
+    }
+
+    public void EnableStartBtn()
+    {
+        gameObject.SetActive(true);
+        Debug.Log("startBtn Enabled!");
+    }
+
+    public void OnDisable()
+    {
+        State.UnSubscribe(Condition.START, DisableStartBtn);
+        State.UnSubscribe(Condition.RESUME, EnableStartBtn);
     }
 }

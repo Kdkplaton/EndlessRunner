@@ -8,47 +8,36 @@ public class TimeManager : MonoBehaviour
 {
     [SerializeField] Text timeText;
     [SerializeField] int minute, second, milsec;
-    float time;
-    bool touch, start;
+    float timeflow;
 
-    // sting.Format()  |  목표 포맷  >>  00 : 00 : 00
-    // {0:D2} : {1:D2} : {2:D2}  << 아마 이것이면 될것
+    public int Second { get { return second; } }
+    static TimeManager instance;
+    public static TimeManager Instance { get { return instance; } }
 
-    void Start()
+    private void Start()
     {
         minute = 0;
         second = 0;
         milsec = 0;
         timeText.text = string.Format("{0:D2} : {1:D2} : {2:D2}", minute, second, milsec);
-        time = 0f;
-        touch = false;
-        start = false;
     }
 
-    void Update()
+    public void OnEnable()
     {
-        if(touch)
-        {
-            if(!start)
-            {
-                StartCoroutine(setTimer());
-                start = true;
-            }
-        }
+        State.Subscribe(Condition.START, StartTimer);
+        State.Subscribe(Condition.FINISH, EndTimer);
     }
 
     IEnumerator setTimer()
     {
         while (true)
         {
-            time += Time.deltaTime;
-            minute = (int)(time / 60);
-            second = (int)(time % 60);
-            milsec = (int)(time % 1 * 100);
+            timeflow += Time.deltaTime;
+            minute = (int)(timeflow / 60);
+            second = (int)(timeflow % 60);
+            milsec = (int)(timeflow % 1 * 100);
 
             timeText.text = string.Format("{0:D2} : {1:D2} : {2:D2}", minute, second, milsec);
-
-            // if (milsec % 25 == 0) { Debug.Log("Times from Game Start : " + timeText.text); }
             
             yield return null;
         }
@@ -56,16 +45,22 @@ public class TimeManager : MonoBehaviour
 
     public void StartTimer()
     {
-        if(!touch) { touch = true; Debug.Log("Timer Started!"); }
+        StartCoroutine(setTimer());
+        Debug.Log("Timer Started!");
     }
 
     public void EndTimer()
     {
-        if (touch) {
-            StopAllCoroutines(); 
-            touch = false; Debug.Log("Timer Started!");
-        }
+        StopAllCoroutines();
+        timeflow = 0f;
+        Debug.Log("Timer Ended!");
     }
 
     public int getSecond() { return second; }
+
+    public void OnDisable()
+    {
+        State.UnSubscribe(Condition.START, StartTimer);
+        State.UnSubscribe(Condition.FINISH, EndTimer);
+    }
 }

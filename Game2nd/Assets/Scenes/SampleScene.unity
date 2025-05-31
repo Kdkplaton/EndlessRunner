@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 423583672}
   - component: {fileID: 423583675}
   - component: {fileID: 423583674}
-  - component: {fileID: 423583673}
+  - component: {fileID: 423583676}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -534,28 +534,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1340433098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &423583673
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423583671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 6, z: -5}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
-  m_AngularDampingMode: 0
-  m_PitchDamping: 0
-  m_YawDamping: 0
-  m_RollDamping: 0
-  m_AngularDamping: 0
 --- !u!114 &423583674
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -595,6 +573,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &423583676
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423583671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 6, z: -5}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
 --- !u!1 &500069037
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,7 +963,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
@@ -1046,27 +1045,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 45, y: 180, z: 0}
---- !u!95 &963194229
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 35b0e416dd458fb42a9efad96777cba2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1216,13 +1194,14 @@ GameObject:
   - component: {fileID: 1181370456}
   - component: {fileID: 1181370460}
   - component: {fileID: 1181370459}
+  - component: {fileID: 1181370461}
   m_Layer: 5
-  m_Name: GameOver Button
+  m_Name: End Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1181370455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1328,6 +1307,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba7d0d9e57427a4b9fe0310b135da7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endBtn: {fileID: 0}
+--- !u!114 &1181370461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181370454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba7d0d9e57427a4b9fe0310b135da7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endBtn: {fileID: 1181370454}
 --- !u!1 &1276348342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,7 +1421,7 @@ MonoBehaviour:
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
-    m_InheritPosition: 1
+    m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -1786,6 +1779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26bf75fc3dc60274fb52663621057882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startBtn: {fileID: 2022694393}
+  endBtn: {fileID: 1181370454}
 --- !u!4 &1442819156
 Transform:
   m_ObjectHideFlags: 0
@@ -2302,7 +2297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31aa3a567a1de3f4cbc38bbfbdd221e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Touch: 0
+  startBtn: {fileID: 2022694396}
 --- !u!1001 &2092122564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3805,6 +3800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineNow: 0
   moveX: 0
+  endBtn: {fileID: 1181370454}
 --- !u!4 &3447102599584362368
 Transform:
   m_ObjectHideFlags: 0

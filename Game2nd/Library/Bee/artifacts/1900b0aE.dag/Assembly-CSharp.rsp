@@ -357,7 +357,6 @@
 "Assets/Scripts/Camera.cs"
 "Assets/Scripts/CoroutineCache.cs"
 "Assets/Scripts/EndButton.cs"
-"Assets/Scripts/FunctionList.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/InteractZone.cs"
 "Assets/Scripts/InterfaceManager.cs"

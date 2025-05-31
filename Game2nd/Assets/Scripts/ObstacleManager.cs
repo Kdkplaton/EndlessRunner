@@ -12,7 +12,6 @@ public class ObstacleManager : MonoBehaviour
     [SerializeField] Transform parentPos;
     [SerializeField] float speed;
     [SerializeField] int listCap;
-    bool touch, start;
     string temp;
     // 데이터 캐싱 : 비싼 연산 결과나 자주 사용되는 데이터를 임시 저장하고,
     //               필요할 때 다시 계산하지 않고 빠르게 가져와 사용하는 기술
@@ -20,8 +19,6 @@ public class ObstacleManager : MonoBehaviour
     void Start()
     {
         setSpeed();
-        touch = false;
-        start = false;
         prefab.Add(Resources.Load<GameObject>("Barrier"));
         prefab.Add(Resources.Load<GameObject>("OilDrum"));
         prefab.Add(Resources.Load<GameObject>("TrafficCone"));
@@ -31,24 +28,10 @@ public class ObstacleManager : MonoBehaviour
         Debug.Log(listCap);
     }
 
-    void Update()
+    public void OnEnable()
     {
-        if (touch)
-        {
-            if (!start)
-            {
-                StartCoroutine(setObstacle());
-                start = true;
-            }
-
-            setSpeed();
-
-            for (int i = 0; i < obstacleList.Count; i++)
-            {
-                if(!obstacleList[i].activeSelf) { continue; }
-                obstacleList[i].transform.Translate(speed * Vector3.up * Time.deltaTime);
-            }
-        }
+        State.Subscribe(Condition.START, StartObstacles);
+        State.Subscribe(Condition.FINISH, EndObstacles);
     }
 
     IEnumerator setObstacle()
@@ -93,16 +76,40 @@ public class ObstacleManager : MonoBehaviour
         }
     }
 
-    public void StartObstacleManager()
-    { if (!touch) { touch = true; Debug.Log("Obstacles Started!"); } }
-
-    public void EndObstacleManager()
+    IEnumerator moveObstacles()
     {
-        if (touch) {
-            StopAllCoroutines();
-            touch = false; Debug.Log("Obstacles Ended!");
+        while(true)
+        {
+            for (int i = 0; i < obstacleList.Count; i++)
+            {
+                if (!obstacleList[i].activeSelf) { continue; }
+                obstacleList[i].transform.Translate(speed * Vector3.up * Time.deltaTime);
+            }
+
+            setSpeed();
+
+            yield return null;
         }
     }
 
+    public void StartObstacles()
+    {
+        StartCoroutine(setObstacle());
+        StartCoroutine(moveObstacles());
+        Debug.Log("Obstacles Started!");
+    }
+
+    public void EndObstacles()
+    {
+        StopAllCoroutines();
+        Debug.Log("Obstacles Ended!");
+    }
+
     void setSpeed() { speed = SpeedManager.Instance.Speed; }
+
+    public void OnDisable()
+    {
+        State.UnSubscribe(Condition.START, StartObstacles);
+        State.UnSubscribe(Condition.FINISH, EndObstacles);
+    }
 }

@@ -1,13 +1,12 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpeedManager : Singleton<SpeedManager>
 {
-    [SerializeField] float speed = 30f;
-    [SerializeField] float accelerate = 10f;
-    [SerializeField] float maxSpeed = 90f;
+    [SerializeField] float speed;
+    [SerializeField] float accelerate;
+    [SerializeField] float maxSpeed;
     int checker = 0, input;
 
     public float Speed { get { return speed; } }
@@ -21,20 +20,54 @@ public class SpeedManager : Singleton<SpeedManager>
         if(instance == null) { instance = this; }
     }
 
-    void Update()
+    private void Start()
     {
-        input = GameObject.Find("TimeManager").GetComponent<TimeManager>().getSecond();
-        
-        if(speed < maxSpeed)
-        {
-            if (checker == 55)
-            { if (input == 0) { speed += accelerate; checker = input; } }
-            else if (input - checker == 5) { speed += accelerate; checker = input; }
-        }
-
+        speed = 30f;
+        accelerate = 10f;
+        maxSpeed = 120f;
     }
 
-    // 이게 필요하지 않음
-    // public float getSpeed() { return speed; }
+    public void OnEnable()
+    {
+        State.Subscribe(Condition.START, StartSpeeder);
+        State.Subscribe(Condition.FINISH, EndSpeeder);
+    }
+
+    void StartSpeeder()
+    {
+        StartCoroutine(setSpeed());
+        Debug.Log("Speed Started!");
+    }
+
+    IEnumerator setSpeed()
+    {
+        while (true)
+        {
+            input = TimeManager.Instance.Second;
+
+            if (speed < maxSpeed)
+            {
+                if (checker == 55)
+                { if (input == 0) { speed += accelerate; checker = input; } }
+                else if (input - checker == 5) { speed += accelerate; checker = input; }
+            }
+
+            yield return null;
+        }
+    }
+
+    void EndSpeeder()
+    {
+        StopAllCoroutines();
+        speed = 30f;
+        Debug.Log("Speed Ended!");
+    }
+
+    public void OnDisable()
+    {
+        State.UnSubscribe(Condition.START, StartSpeeder);
+        State.UnSubscribe(Condition.FINISH, EndSpeeder);
+    }
+
 
 }
