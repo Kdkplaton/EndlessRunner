@@ -8,19 +8,12 @@ public class GameManager : MonoBehaviour
 
     public void OnEnable()
     {
-
+        //State.Subscribe(Condition.FINISH, EnableEndBtn);
     }
 
     public void OnDisable()
     {
-
-    }
-
-    public void EnableEndBtn()
-    {
-        new WaitForSeconds(1f);
-        endBtn.SetActive(true);
-        Debug.Log("EndBtn Enabled!");
+        //State.UnSubscribe(Condition.FINISH, EnableEndBtn);
     }
 
     public void Execute()
@@ -32,7 +25,7 @@ public class GameManager : MonoBehaviour
     public void Finish()
     {
         State.Publish(Condition.FINISH);
-        EnableEndBtn();
+
         Debug.Log("Finish!");
     }
     public void Resume()

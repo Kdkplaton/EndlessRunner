@@ -16,7 +16,7 @@ public class ObstacleManager : MonoBehaviour
     // 데이터 캐싱 : 비싼 연산 결과나 자주 사용되는 데이터를 임시 저장하고,
     //               필요할 때 다시 계산하지 않고 빠르게 가져와 사용하는 기술
 
-    void Start()
+    void Awake()
     {
         setSpeed();
         prefab.Add(Resources.Load<GameObject>("Barrier"));
@@ -92,7 +92,8 @@ public class ObstacleManager : MonoBehaviour
         }
     }
 
-    public void StartObstacles()
+    // void Execute()
+    void StartObstacles()
     {
         StartCoroutine(setObstacle());
         StartCoroutine(moveObstacles());

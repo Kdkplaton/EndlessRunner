@@ -11,8 +11,6 @@ public class TimeManager : MonoBehaviour
     float timeflow;
 
     public int Second { get { return second; } }
-    static TimeManager instance;
-    public static TimeManager Instance { get { return instance; } }
 
     private void Start()
     {

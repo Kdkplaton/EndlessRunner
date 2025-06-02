@@ -1,40 +1,64 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EndButton : MonoBehaviour
 {
-    [SerializeField] GameObject endBtn;
-    GameObject gameManager;
+    [SerializeField] GameObject endButton;
+    Button endBtn;
+    Transform endText;
 
-    void Start()
+    void Awake()
     {
-        gameManager = GameObject.Find("GameManager");
-        endBtn = GameObject.Find("End Button");
-        endBtn.GetComponent<Button>().onClick.AddListener(OnClickEnd);
-        gameObject.SetActive(false);
+        endButton = GameObject.Find("End Button");
+
+        gameObject.SetActive(true);
+        endText = transform.Find("EndText");
+        endText.gameObject.SetActive(false);
+
+        endBtn = GetComponent<Button>();
+        endBtn.onClick.AddListener(OnClickEnd);
+
+        State.Subscribe(Condition.FINISH, EnableEndBtn);
+        endButton.SetActive(false);
     }
 
     public void OnEnable()
     {
         State.Subscribe(Condition.RESUME, DisableEndBtn);
+        State.UnSubscribe(Condition.FINISH, EnableEndBtn);
     }
 
     public void OnClickEnd()
     {
         Application.Quit();
-        //gameManager.GetComponent<GameManager>().Resume();
+    }
+    public void EnableEndBtn()
+    {
+        endButton.SetActive(true);
+        StartCoroutine(ActiveEndBtn());
+    }
+
+    IEnumerator ActiveEndBtn()
+    {
+        yield return CoroutineCache.WaitForSecond(1f);
+        endText.gameObject.SetActive(true);
+        Debug.Log("EndBtn Enabled!");
     }
 
     public void DisableEndBtn()
     {
-        endBtn.SetActive(false);
+        StopAllCoroutines();
+        endText.gameObject.SetActive(false);
+        endButton.SetActive(false);
         Debug.Log("EndBtn Disabled!");
     }
 
     public void OnDisable()
     {
         State.UnSubscribe(Condition.RESUME, DisableEndBtn);
+        State.Subscribe(Condition.FINISH, EnableEndBtn);
     }
 
 }

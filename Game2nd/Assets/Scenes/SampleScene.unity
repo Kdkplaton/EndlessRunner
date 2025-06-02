@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 130403636}
   - component: {fileID: 130403635}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: StartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba7d0d9e57427a4b9fe0310b135da7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endBtn: {fileID: 0}
+  endButton: {fileID: 0}
 --- !u!114 &1181370461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba7d0d9e57427a4b9fe0310b135da7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endBtn: {fileID: 1181370454}
+  endButton: {fileID: 1181370454}
 --- !u!1 &1276348342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,12 +1809,12 @@ GameObject:
   - component: {fileID: 1485057772}
   - component: {fileID: 1485057774}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: EndText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1485057771
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1923,6 +1923,7 @@ MonoBehaviour:
   speed: 30
   accelerate: 10
   maxSpeed: 90
+  timeManager: {fileID: 1276348344}
 --- !u!4 &1507320465
 Transform:
   m_ObjectHideFlags: 0
@@ -3800,7 +3801,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineNow: 0
   moveX: 0
-  endBtn: {fileID: 1181370454}
 --- !u!4 &3447102599584362368
 Transform:
   m_ObjectHideFlags: 0

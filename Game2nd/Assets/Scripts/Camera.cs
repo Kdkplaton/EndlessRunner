@@ -40,15 +40,15 @@ public class Camera : MonoBehaviour
     {
         Vector3 endPos;
         endPos = transform.position;
-        endPos.z -= 5f;
-        Debug.Log("endPos1 : " + endPos);
+        endPos.z -= 5f;         // offset값 고려하여 보정
 
         StopAllCoroutines();
         cinemachineCam.Follow = null;
-        Debug.Log("endPos2 : " + endPos);
-        transform.position = endPos;
+        Debug.Log("endPos : " + endPos);
+        transform.position = endPos;    // 이게 작동을 안하는건가?
+        //cinemachineCam.LookAt = runner.transform;
 
-        cameraAnimator.SetTrigger("Die");
+        //cameraAnimator.SetTrigger("Die");
         Debug.Log("Cam Ended!");
     }
 

@@ -13,6 +13,8 @@ public class SpeedManager : Singleton<SpeedManager>
     static SpeedManager instance;
     public static SpeedManager Instance { get { return instance; } }
 
+    [SerializeField] TimeManager timeManager;
+
     override protected void Awake()
     {
         base.Awake();
@@ -43,7 +45,7 @@ public class SpeedManager : Singleton<SpeedManager>
     {
         while (true)
         {
-            input = TimeManager.Instance.Second;
+            input = timeManager.Second;
 
             if (speed < maxSpeed)
             {

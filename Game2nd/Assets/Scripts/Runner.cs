@@ -12,17 +12,15 @@ public class Runner : MonoBehaviour
     [SerializeField] float moveX;
     bool isMoving;
     Animator runnerAnimator;
-    GameManager gameManager;
-    [SerializeField] GameObject endBtn;
+    //Rigidbody rigidbody;
 
     // 러너가 스피드를 사용?
     float speed;
 
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        //endBtn = GameObject.Find("End Button");
         runnerAnimator = GetComponent<Animator>();
+        //rigidbody = GetComponent<Rigidbody>();
         moveX = 3;
         lineNow = RoadLine.MIDDLE;
         isMoving = false;
@@ -34,42 +32,16 @@ public class Runner : MonoBehaviour
         State.Subscribe(Condition.FINISH, EndRunner);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Keyboard();
-    }
-
     public void StartRunner()
     {
         runnerAnimator.SetTrigger("Touch");
+        StartCoroutine(MoveRunner());
         Debug.Log("Runner Started!");
     }
 
-    void Keyboard()
+    IEnumerator MoveRunner()
     {
-        Vector3 targetPos = new Vector3(0,0,5);
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (lineNow != RoadLine.LEFT && isMoving == false) {
-                lineNow--;
-                targetPos = new Vector3((float)lineNow * moveX, 0, 5);
-                
-                StartCoroutine(MoveOverSeconds(targetPos, 0.5f));
-                runnerAnimator.SetTrigger("moveLeft");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (lineNow != RoadLine.RIGHT && isMoving == false) {
-                lineNow++;
-                targetPos = new Vector3((float)lineNow * moveX, 0, 5);
-
-                StartCoroutine(MoveOverSeconds(targetPos, 0.5f));
-                runnerAnimator.SetTrigger("moveRight");
-            }
-        }
+        Vector3 targetPos = new Vector3(0, 0, 5);
 
         IEnumerator MoveOverSeconds(Vector3 endPos, float duration)
         {
@@ -88,20 +60,51 @@ public class Runner : MonoBehaviour
             // transform.rotation = Quaternion.Euler(0,0,0);   // 방향 고정
             isMoving = false;
         }
+
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (lineNow != RoadLine.LEFT && isMoving == false)
+                {
+                    lineNow--;
+                    targetPos = new Vector3((float)lineNow * moveX, 0, 5);
+
+                    StartCoroutine(MoveOverSeconds(targetPos, 0.5f));
+                    runnerAnimator.SetTrigger("moveLeft");
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (lineNow != RoadLine.RIGHT && isMoving == false)
+                {
+                    lineNow++;
+                    targetPos = new Vector3((float)lineNow * moveX, 0, 5);
+
+                    StartCoroutine(MoveOverSeconds(targetPos, 0.5f));
+                    runnerAnimator.SetTrigger("moveRight");
+                }
+            }
+            yield return null;
+        }
     }
 
     public void EndRunner()
     {
-        transform.position += new Vector3(0, 0, -0.5f);
         StopAllCoroutines();
         runnerAnimator.SetTrigger("Die");
-        lineNow = RoadLine.MIDDLE;
+        lineNow = RoadLine.MIDDLE;      // 초기화
         Debug.Log("Runner Ended!");
     }
 
     void OnTriggerEnter(Collider other)
     {
-        gameManager.Finish();
+        Obstacle obstacle = other.GetComponent<Obstacle>();
+
+        if(obstacle != null)
+        {
+            State.Publish(Condition.FINISH);
+        }
     }
 
     public void OnDisable()
