@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SpeedManager : Singleton<SpeedManager>
 {
+    [SerializeField] float initSpeed;
     [SerializeField] float speed;
     [SerializeField] float accelerate;
     [SerializeField] float maxSpeed;
     int checker = 0, input;
 
+    public float InitSpeed { get { return initSpeed; } }
     public float Speed { get { return speed; } }
     static SpeedManager instance;
     public static SpeedManager Instance { get { return instance; } }
-
-    [SerializeField] TimeManager timeManager;
 
     override protected void Awake()
     {
@@ -22,19 +22,14 @@ public class SpeedManager : Singleton<SpeedManager>
         if(instance == null) { instance = this; }
     }
 
-    private void Start()
-    {
-        speed = 30f;
-        accelerate = 10f;
-        maxSpeed = 120f;
-    }
-
     public void OnEnable()
     {
+        speed = initSpeed;
         State.Subscribe(Condition.START, StartSpeeder);
         State.Subscribe(Condition.FINISH, EndSpeeder);
     }
 
+    // Execute()
     void StartSpeeder()
     {
         StartCoroutine(setSpeed());
@@ -45,23 +40,17 @@ public class SpeedManager : Singleton<SpeedManager>
     {
         while (true)
         {
-            input = timeManager.Second;
+            yield return CoroutineCache.WaitForSecond(1f);
 
-            if (speed < maxSpeed)
-            {
-                if (checker == 55)
-                { if (input == 0) { speed += accelerate; checker = input; } }
-                else if (input - checker == 5) { speed += accelerate; checker = input; }
-            }
-
-            yield return null;
+            if(speed < maxSpeed) { speed += accelerate; }
         }
     }
 
+    // Release()
     void EndSpeeder()
     {
         StopAllCoroutines();
-        speed = 30f;
+        speed = 50f;
         Debug.Log("Speed Ended!");
     }
 

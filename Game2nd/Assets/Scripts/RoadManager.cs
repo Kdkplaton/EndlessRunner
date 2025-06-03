@@ -52,12 +52,14 @@ public class RoadManager : MonoBehaviour
         else { roadNum += 1; }
     }
 
+    // Execute()
     public void StartRoads()
     {
         StartCoroutine(moveRoads());
         Debug.Log("Road Started!");
     }
 
+    // Release()
     public void EndRoads()
     {
         StopAllCoroutines();

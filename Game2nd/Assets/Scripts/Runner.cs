@@ -13,8 +13,6 @@ public class Runner : MonoBehaviour
     bool isMoving;
     Animator runnerAnimator;
     //Rigidbody rigidbody;
-
-    // 러너가 스피드를 사용?
     float speed;
 
     void Start()
@@ -24,6 +22,7 @@ public class Runner : MonoBehaviour
         moveX = 3;
         lineNow = RoadLine.MIDDLE;
         isMoving = false;
+        speed = 40;
     }
 
     public void OnEnable()
@@ -95,6 +94,16 @@ public class Runner : MonoBehaviour
         runnerAnimator.SetTrigger("Die");
         lineNow = RoadLine.MIDDLE;      // 초기화
         Debug.Log("Runner Ended!");
+    }
+
+    public void Synchronize()
+    {
+        float speedNow = SpeedManager.Instance.Speed / SpeedManager.Instance.InitSpeed;
+        if (speedNow < 4)
+        {
+            runnerAnimator.SetFloat("runSPD", speedNow);
+            Debug.Log("Synchronize!");
+        }
     }
 
     void OnTriggerEnter(Collider other)

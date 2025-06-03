@@ -100,6 +100,7 @@ public class ObstacleManager : MonoBehaviour
         Debug.Log("Obstacles Started!");
     }
 
+    // Release()
     public void EndObstacles()
     {
         StopAllCoroutines();

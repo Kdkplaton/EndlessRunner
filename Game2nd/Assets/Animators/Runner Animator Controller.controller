@@ -210,8 +210,8 @@ AnimatorState:
   m_Tag: 
   m_SpeedParameter: runSPD
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_CycleOffsetParameter: runSPD
+  m_TimeParameter: runSPD
 --- !u!1101 &1371238241855421944
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

@@ -41,12 +41,14 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    // Execute()
     public void StartTimer()
     {
         StartCoroutine(setTimer());
         Debug.Log("Timer Started!");
     }
 
+    // Release()
     public void EndTimer()
     {
         StopAllCoroutines();

@@ -6,14 +6,13 @@ public class Camera : MonoBehaviour
 {
     CinemachineVirtualCamera cinemachineCam;
     Animator cameraAnimator;
-    GameObject runner;
+    Runner runner;
 
     void Start()
     {
         cinemachineCam = GetComponent<CinemachineVirtualCamera>();
-        cinemachineCam.Follow = null;
         cameraAnimator = GetComponent<Animator>();
-        runner = GameObject.Find("Runner");
+        runner = GameObject.Find("Runner").GetComponent<Runner>();
     }
 
     public void OnEnable()
@@ -42,13 +41,12 @@ public class Camera : MonoBehaviour
         endPos = transform.position;
         endPos.z -= 5f;         // offset값 고려하여 보정
 
-        StopAllCoroutines();
-        cinemachineCam.Follow = null;
+        cinemachineCam.gameObject.transform.position = endPos;
         Debug.Log("endPos : " + endPos);
-        transform.position = endPos;    // 이게 작동을 안하는건가?
-        //cinemachineCam.LookAt = runner.transform;
+        cinemachineCam.Follow = null;
+        cinemachineCam.LookAt = runner.transform;
 
-        //cameraAnimator.SetTrigger("Die");
+        cameraAnimator.SetTrigger("Die");
         Debug.Log("Cam Ended!");
     }
 

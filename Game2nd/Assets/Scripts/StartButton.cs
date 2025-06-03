@@ -5,11 +5,9 @@ using UnityEngine.UI;
 public class StartButton : MonoBehaviour
 {
     [SerializeField] Button startBtn;
-    GameManager gameManager;
 
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         startBtn.onClick.AddListener(OnClickStart);
     }
 
@@ -21,7 +19,7 @@ public class StartButton : MonoBehaviour
 
     public void OnClickStart()
     {
-        gameManager.Execute();
+        State.Publish(Condition.START);
     }
 
     public void DisableStartBtn()

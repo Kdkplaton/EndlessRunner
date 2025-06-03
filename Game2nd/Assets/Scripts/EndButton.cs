@@ -5,38 +5,35 @@ using UnityEngine.UI;
 
 public class EndButton : MonoBehaviour
 {
-    [SerializeField] GameObject endButton;
     Button endBtn;
     Transform endText;
 
     void Awake()
     {
-        endButton = GameObject.Find("End Button");
-
         gameObject.SetActive(true);
         endText = transform.Find("EndText");
         endText.gameObject.SetActive(false);
 
         endBtn = GetComponent<Button>();
-        endBtn.onClick.AddListener(OnClickEnd);
-
         State.Subscribe(Condition.FINISH, EnableEndBtn);
-        endButton.SetActive(false);
+        endBtn.gameObject.SetActive(false);
     }
 
     public void OnEnable()
     {
         State.Subscribe(Condition.RESUME, DisableEndBtn);
         State.UnSubscribe(Condition.FINISH, EnableEndBtn);
+        StartCoroutine(ActiveEndBtn());
     }
 
     public void OnClickEnd()
     {
-        Application.Quit();
+        //State.Publish(Condition.RESUME);
+        UnityEditor.EditorApplication.isPlaying = false;
     }
     public void EnableEndBtn()
     {
-        endButton.SetActive(true);
+        gameObject.SetActive(true);
         StartCoroutine(ActiveEndBtn());
     }
 
@@ -44,6 +41,7 @@ public class EndButton : MonoBehaviour
     {
         yield return CoroutineCache.WaitForSecond(1f);
         endText.gameObject.SetActive(true);
+        endBtn.onClick.AddListener(OnClickEnd);
         Debug.Log("EndBtn Enabled!");
     }
 
@@ -51,7 +49,8 @@ public class EndButton : MonoBehaviour
     {
         StopAllCoroutines();
         endText.gameObject.SetActive(false);
-        endButton.SetActive(false);
+        gameObject.SetActive(false);
+        endBtn.onClick.RemoveAllListeners();
         Debug.Log("EndBtn Disabled!");
     }
 

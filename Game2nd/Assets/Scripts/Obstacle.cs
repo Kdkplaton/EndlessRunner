@@ -6,12 +6,23 @@ using UnityEngine.Events;
 public class Obstacle : MonoBehaviour, Collidable
 {
 
-    void Start()
+    void OnEnable()
     {
+        State.Subscribe(Condition.FINISH, Release);
     }
 
     public void Activate()
     {
         gameObject.SetActive(false);
+    }
+
+    void Release()
+    {
+        Destroy(this);
+    }
+
+    void OnDisable()
+    {
+        State.UnSubscribe(Condition.FINISH, Release);
     }
 }
