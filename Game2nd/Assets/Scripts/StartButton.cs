@@ -20,6 +20,8 @@ public class StartButton : MonoBehaviour
     public void OnClickStart()
     {
         State.Publish(Condition.START);
+        AudioManager.Instance.Listener("Enter Button");
+        AudioManager.Instance.PlayBGM("Execute");
     }
 
     public void DisableStartBtn()

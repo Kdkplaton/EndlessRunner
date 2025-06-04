@@ -92,6 +92,10 @@ public class Runner : MonoBehaviour
     {
         StopAllCoroutines();
         runnerAnimator.SetTrigger("Die");
+
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.Listener("Conflict");
+
         lineNow = RoadLine.MIDDLE;      // 초기화
         Debug.Log("Runner Ended!");
     }
