@@ -3,18 +3,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject startBtn;
-    [SerializeField] GameObject endBtn;
-
-    public void OnEnable()
-    {
-        //State.Subscribe(Condition.FINISH, EnableEndBtn);
-    }
-
-    public void OnDisable()
-    {
-        //State.UnSubscribe(Condition.FINISH, EnableEndBtn);
-    }
 
     public void Execute()
     {

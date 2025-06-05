@@ -9,7 +9,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] AudioSource SceneryAudioSource;
 
 
-    protected virtual void Awake()
+    override protected void Awake()
     {
         base.Awake();
     }

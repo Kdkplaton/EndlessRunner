@@ -9,7 +9,6 @@ public class SpeedManager : Singleton<SpeedManager>
     [SerializeField] float speed;
     [SerializeField] float accelerate;
     [SerializeField] float maxSpeed;
-    int checker = 0, input;
 
     public float InitSpeed { get { return initSpeed; } }
     public float Speed { get { return speed; } }

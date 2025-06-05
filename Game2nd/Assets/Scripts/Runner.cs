@@ -13,7 +13,8 @@ public class Runner : MonoBehaviour
     bool isMoving;
     Animator runnerAnimator;
     //Rigidbody rigidbody;
-    float speed;
+    
+    // float speed;
 
     void Start()
     {
@@ -22,7 +23,7 @@ public class Runner : MonoBehaviour
         moveX = 3;
         lineNow = RoadLine.MIDDLE;
         isMoving = false;
-        speed = 40;
+        // speed = 40;
     }
 
     public void OnEnable()
